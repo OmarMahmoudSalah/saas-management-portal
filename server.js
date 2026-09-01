@@ -50,6 +50,8 @@ const server = http.createServer((req, res) => {
         existing.hwFingerprint = data.hwFingerprint || existing.hwFingerprint;
         existing.version = data.version;
         existing.uptime = data.uptime;
+        existing.nodeType = 'CHILD_APP_NODE';
+        existing.parentAuthority = 'PARENT_MASTER_HQ';
 
         liveClientsMap.set(tenantId, existing);
 
