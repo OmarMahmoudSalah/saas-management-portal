@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Door to Door — SaaS Master Central Control Portal</title>
+  <!-- Main Warehouse Application Exact Stylesheet -->
+  <link rel="stylesheet" href="/index.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Ensure full height viewport layout matching main app */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: var(--bg-main, #08080c);
+      color: var(--text-main, #e4e4e7);
+      font-family: var(--font-main, 'Inter', sans-serif);
+    }
+
+    .saas-root {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    .main-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .scroll-content {
+      flex: 1;
+      padding: 24px 32px;
+      overflow-y: auto;
+    }
+
+    /* Views toggle */
+    .view-pane { display: none; }
+    .view-pane.active { display: block; }
+  </style>
+</head>
+<body class="dark">
+
+  <div class="saas-root pageLayout dark">
+    
+    <!-- ─── REPLICA SIDEBAR (Matching Sidebar.jsx) ─── -->
+    <aside class="sidebar no-print" aria-label="Main Sidebar Navigation" style="width: 240px; background: #090d16; border-right: 1px solid var(--border, #1f1f27); display: flex; flex-direction: column; user-select: none;">
+      <div class="brand" style="padding: 18px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border, #1f1f27);">
+        <div class="brandIcon" style="width: 38px; height: 38px; background: var(--primary, #3b82f6); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 800; font-size: 18px;">
+          <i data-lucide="truck" size="20"></i>
+        </div>
+        <div>
+          <div class="brandTitle" style="font-weight: 800; font-size: 15px; color: #ffffff;">Door to Door</div>
+          <div class="brandSub" style="font-size: 11px; color: var(--text-muted, #a1a1aa);">SaaS Control HQ</div>
+        </div>
+      </div>
+
+      <nav class="navVertical" style="flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;">
+        <button class="navLink active" id="nav-dashboard" onclick="switchView('dashboard', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: var(--primary, #3b82f6); color: #ffffff; font-weight: 700; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+          <i data-lucide="pie-chart" size="18"></i>
+          <span>Dashboard & MRR</span>
+        </button>
+
+        <button class="navLink" id="nav-clients" onclick="switchView('clients', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+          <i data-lucide="building-2" size="18"></i>
+          <span>Client Instances</span>
+        </button>
+
+        <button class="navLink" id="nav-license" onclick="switchView('license', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+          <i data-lucide="key" size="18"></i>
+          <span>Hardware License</span>
+        </button>
+
+        <button class="navLink" id="nav-features" onclick="switchView('features', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+          <i data-lucide="sparkles" size="18"></i>
+          <span>Feature Flags</span>
+        </button>
+
+        <button class="navLink" id="nav-logs" onclick="switchView('logs', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+          <i data-lucide="activity" size="18"></i>
+          <span>Telemetry Stream</span>
+        </button>
+
+        <button class="navLink" id="nav-settings" onclick="switchView('settings', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+          <i data-lucide="settings" size="18"></i>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar User Footprint -->
+      <div style="padding: 16px; border-top: 1px solid var(--border, #1f1f27); display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2);">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); color: var(--primary, #3b82f6); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; border: 1px solid var(--primary, #3b82f6);">
+          SA
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 700; color: #ffffff;">Super Admin</div>
+          <div style="font-size: 11px; color: var(--text-muted, #a1a1aa);">Company Headquarters</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ─── REPLICA MAIN CONTENT BODY ─── -->
+    <div class="main-body">
+      
+      <!-- REPLICA HEADER BAR (Matching Header.jsx) -->
+      <header class="header no-print" style="height: 64px; background: var(--bg-card, #101014); border-bottom: 1px solid var(--border, #1f1f27); display: flex; align-items: center; justify-content: space-between; padding: 0 28px;">
+        <div class="headerSearchContainer" style="display: flex; align-items: center; gap: 10px; background: var(--bg-main, #08080c); border: 1px solid var(--input-border, #23232c); border-radius: 8px; padding: 8px 14px; width: 320px;">
+          <i data-lucide="search" size="16" color="var(--text-muted, #a1a1aa)"></i>
+          <input 
+            type="text" 
+            id="searchInput"
+            oninput="handleSearch(this.value)"
+            placeholder="Search organizations or hardware IDs..." 
+            style="flex: 1; border: none; outline: none; background: transparent; color: var(--text-dark, #ffffff); font-size: 13px;"
+          >
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--success, #10b981); padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--success, #10b981); box-shadow: 0 0 8px var(--success, #10b981);"></span>
+            Central Telemetry Online
+          </div>
+
+          <button onclick="fetchClientsData()" style="padding: 8px 14px; background: var(--bg-main, #08080c); border: 1px solid var(--border, #1f1f27); color: #ffffff; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <i data-lucide="refresh-cw" size="14"></i>
+            <span>Refresh</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- SCROLLABLE CONTENT VIEWS -->
+      <div class="scroll-content">
+
+        <!-- VIEW 1: DASHBOARD ANALYTICS -->
+        <div id="pane-dashboard" class="view-pane active">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px;">
+            <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; padding: 20px; position: relative;">
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-muted, #a1a1aa); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center;">
+                Monthly Recurring Revenue <i data-lucide="dollar-sign" size="16" color="var(--success, #10b981)"></i>
+              </div>
+              <div style="font-size: 28px; font-weight: 800; color: var(--success, #10b981); margin-top: 8px;" id="valMrr">$216 / mo</div>
+              <div style="font-size: 12px; color: var(--text-muted, #a1a1aa);">Calculated subscription MRR</div>
+            </div>
+
+            <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; padding: 20px;">
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-muted, #a1a1aa); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center;">
+                Annual Run Rate <i data-lucide="trending-up" size="16" color="var(--primary, #3b82f6)"></i>
+              </div>
+              <div style="font-size: 28px; font-weight: 800; color: var(--primary, #3b82f6); margin-top: 8px;" id="valArr">$2,592 / yr</div>
+              <div style="font-size: 12px; color: var(--text-muted, #a1a1aa);">Contracted ARR metrics</div>
+            </div>
+
+            <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; padding: 20px;">
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-muted, #a1a1aa); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center;">
+                Active App Instances <i data-lucide="building-2" size="16" color="#38bdf8"></i>
+              </div>
+              <div style="font-size: 28px; font-weight: 800; color: #ffffff; margin-top: 8px;" id="valClients">1 Active Client</div>
+              <div style="font-size: 12px; color: var(--success, #10b981);">Heartbeating app servers</div>
+            </div>
+
+            <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; padding: 20px;">
+              <div style="font-size: 12px; font-weight: 700; color: var(--text-muted, #a1a1aa); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center;">
+                Hardware Anti-Cloning <i data-lucide="shield-check" size="16" color="var(--warning, #f59e0b)"></i>
+              </div>
+              <div style="font-size: 20px; font-weight: 800; color: var(--success, #10b981); margin-top: 12px;">ACTIVE ENFORCED</div>
+              <div style="font-size: 12px; color: var(--text-muted, #a1a1aa);">Machine ID fingerprinting on</div>
+            </div>
+          </div>
+
+          <!-- Section Card -->
+          <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; overflow: hidden; margin-bottom: 24px;">
+            <div style="padding: 16px 20px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border, #1f1f27); font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px;">
+              <i data-lucide="building-2" color="var(--primary, #3b82f6)" size="18"></i> Active Client Telemetry Streams
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+              <thead>
+                <tr style="background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border, #1f1f27); color: var(--text-muted, #a1a1aa); font-size: 11px; text-transform: uppercase;">
+                  <th style="padding: 12px 18px; text-align: left;">Organization / Tenant ID</th>
+                  <th style="padding: 12px 18px; text-align: center;">Plan Tier</th>
+                  <th style="padding: 12px 18px; text-align: center;">Status</th>
+                  <th style="padding: 12px 18px; text-align: center;">Hardware Machine ID</th>
+                  <th style="padding: 12px 18px; text-align: right;">Remote Action</th>
+                </tr>
+              </thead>
+              <tbody id="dashTable">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- VIEW 2: CLIENT INSTANCES DIRECTORY -->
+        <div id="pane-clients" class="view-pane">
+          <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; overflow: hidden;">
+            <div style="padding: 16px 20px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border, #1f1f27); font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px;">
+              <i data-lucide="users" color="var(--primary, #3b82f6)" size="18"></i> Client App Instances Directory
+            </div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+              <thead>
+                <tr style="background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border, #1f1f27); color: var(--text-muted, #a1a1aa); font-size: 11px; text-transform: uppercase;">
+                  <th style="padding: 12px 18px; text-align: left;">Organization Name & Tenant ID</th>
+                  <th style="padding: 12px 18px; text-align: center;">Subscription Plan</th>
+                  <th style="padding: 12px 18px; text-align: center;">Heartbeat Status</th>
+                  <th style="padding: 12px 18px; text-align: center;">Hardware Machine ID</th>
+                  <th style="padding: 12px 18px; text-align: right;">Remote Kill-Switch</th>
+                </tr>
+              </thead>
+              <tbody id="clientsTable">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- VIEW 3: HARDWARE LICENSE GENERATOR -->
+        <div id="pane-license" class="view-pane">
+          <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; max-width: 640px; overflow: hidden;">
+            <div style="padding: 16px 20px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border, #1f1f27); font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px;">
+              <i data-lucide="key" color="var(--primary, #3b82f6)" size="18"></i> Generate Hardware Anti-Cloning License Token
+            </div>
+            <div style="padding: 24px;">
+              <form onsubmit="handleLicenseSubmit(event)">
+                <div style="margin-bottom: 16px;">
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-muted, #a1a1aa); margin-bottom: 6px;">Client Organization Tenant ID</label>
+                  <input type="text" id="licTenantId" style="width: 100%; padding: 10px 14px; background: var(--bg-main, #08080c); border: 1px solid var(--input-border, #23232c); border-radius: 8px; color: #ffffff; font-size: 13px;" value="org_door_to_door_express" required>
+                </div>
+                <div style="margin-bottom: 20px;">
+                  <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-muted, #a1a1aa); margin-bottom: 6px;">Client VPS Machine ID Fingerprint</label>
+                  <input type="text" id="licHwId" style="width: 100%; padding: 10px 14px; background: var(--bg-main, #08080c); border: 1px solid var(--input-border, #23232c); border-radius: 8px; color: #ffffff; font-size: 13px; font-family: monospace;" value="1bb8728e96b22699aa45567c795dd631" required>
+                </div>
+                <button type="submit" style="width: 100%; padding: 12px; background: var(--primary, #3b82f6); color: #ffffff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                  🔑 Issue Cryptographic Signed Token
+                </button>
+              </form>
+
+              <div id="licOutput" style="display: none; margin-top: 20px; padding: 16px; background: var(--bg-main, #08080c); border: 1px dashed var(--primary, #3b82f6); border-radius: 10px;">
+                <div style="font-size: 11px; font-weight: 700; color: var(--primary, #3b82f6); text-transform: uppercase; margin-bottom: 6px;">Signed License Token:</div>
+                <div id="licToken" style="font-family: monospace; font-size: 11px; color: var(--success, #10b981); word-break: break-all;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 4: FEATURE FLAGS -->
+        <div id="pane-features" class="view-pane">
+          <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; max-width: 640px; overflow: hidden;">
+            <div style="padding: 16px 20px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border, #1f1f27); font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px;">
+              <i data-lucide="sparkles" color="var(--primary, #3b82f6)" size="18"></i> Remote SaaS Feature Flags
+            </div>
+            <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px; background: var(--bg-main, #08080c); border: 1px solid var(--border, #1f1f27); border-radius: 10px;">
+                <div>
+                  <div style="font-weight: 700; font-size: 14px;">AES-256-GCM Per-Tenant Data Encryption</div>
+                  <div style="font-size: 12px; color: var(--text-muted, #a1a1aa);">Encrypts cartons & receipts payload at rest</div>
+                </div>
+                <span style="background: rgba(16, 185, 129, 0.2); color: var(--success, #10b981); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800;">ENFORCED</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px; background: var(--bg-main, #08080c); border: 1px solid var(--border, #1f1f27); border-radius: 10px;">
+                <div>
+                  <div style="font-weight: 700; font-size: 14px;">Hardware Machine ID Verification Guard</div>
+                  <div style="font-size: 12px; color: var(--text-muted, #a1a1aa);">Prevents unauthorized server cloning</div>
+                </div>
+                <span style="background: rgba(16, 185, 129, 0.2); color: var(--success, #10b981); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800;">ENFORCED</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 5: LOGS -->
+        <div id="pane-logs" class="view-pane">
+          <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; overflow: hidden;">
+            <div style="padding: 16px 20px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border, #1f1f27); font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px;">
+              <i data-lucide="activity" color="var(--primary, #3b82f6)" size="18"></i> Live Heartbeat & Security Stream
+            </div>
+            <div style="padding: 20px; font-family: monospace; font-size: 12px; color: #a5b4fc; background: #090d16; min-height: 280px;">
+              [0] [SaaS Telemetry Server] Master control listening on Port 8080...<br>
+              [0] [Telemetry Dispatcher] Live Heartbeat received from 'org_door_to_door_express' (HW: 1bb8728e96b22699aa45567c795dd631).<br>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 6: SETTINGS -->
+        <div id="pane-settings" class="view-pane">
+          <div style="background: var(--bg-card, #101014); border: 1px solid var(--border, #1f1f27); border-radius: 14px; max-width: 640px; overflow: hidden;">
+            <div style="padding: 16px 20px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border, #1f1f27); font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px;">
+              <i data-lucide="settings" color="var(--primary, #3b82f6)" size="18"></i> Portal Configuration
+            </div>
+            <div style="padding: 24px;">
+              <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-muted, #a1a1aa); margin-bottom: 6px;">Master Authorization Token</label>
+                <input type="text" style="width: 100%; padding: 10px 14px; background: var(--bg-main, #08080c); border: 1px solid var(--input-border, #23232c); border-radius: 8px; color: #ffffff; font-size: 13px;" value="saas_master_secret_token_2026" readonly>
+              </div>
+              <div style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 12px; font-weight: 700; color: var(--text-muted, #a1a1aa); margin-bottom: 6px;">Telemetry Dispatcher Port</label>
+                <input type="text" style="width: 100%; padding: 10px 14px; background: var(--bg-main, #08080c); border: 1px solid var(--input-border, #23232c); border-radius: 8px; color: #ffffff; font-size: 13px;" value="8080" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let globalClients = [];
+
+    function switchView(viewId, btn) {
+      document.querySelectorAll('.view-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.navLink').forEach(b => {
+        b.style.background = 'transparent';
+        b.style.color = 'var(--text-muted, #a1a1aa)';
+        b.style.fontWeight = '600';
+      });
+
+      document.getElementById(`pane-${viewId}`).classList.add('active');
+      if (btn) {
+        btn.style.background = 'var(--primary, #3b82f6)';
+        btn.style.color = '#ffffff';
+        btn.style.fontWeight = '700';
+      }
+    }
+
+    async function fetchClientsData() {
+      try {
+        const res = await fetch('/api/clients');
+        globalClients = await res.json();
+        renderClients(globalClients);
+      } catch (e) {
+        console.error('Failed to fetch clients:', e);
+      }
+    }
+
+    function renderClients(clients) {
+      document.getElementById('valClients').innerText = `${clients.length} Active Client${clients.length === 1 ? '' : 's'}`;
+      const mrr = clients.reduce((acc, c) => acc + (c.plan === 'ENTERPRISE' ? 432 : 216), 0);
+      document.getElementById('valMrr').innerText = `$${mrr} / mo`;
+      document.getElementById('valArr').innerText = `$${mrr * 12} / yr`;
+
+      const rows = clients.map(c => `
+        <tr style="border-bottom: 1px solid var(--border, #1f1f27);">
+          <td style="padding: 14px 18px;">
+            <div style="font-weight: 700; color: #ffffff;">${c.name}</div>
+            <div style="font-family: monospace; font-size: 11px; color: var(--text-muted, #a1a1aa);">${c.id}</div>
+          </td>
+          <td style="text-align: center; padding: 14px 18px;">
+            <span style="background: rgba(59,130,246,0.15); color: #818cf8; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800;">
+              ${c.plan || 'GROWTH'}
+            </span>
+          </td>
+          <td style="text-align: center; padding: 14px 18px;">
+            <span style="color: ${c.status === 'ACTIVE' ? 'var(--success, #10b981)' : 'var(--danger, #ef4444)'}; font-weight: 800;">
+              ${c.status === 'ACTIVE' ? '● ACTIVE' : '✖ SUSPENDED'}
+            </span>
+          </td>
+          <td style="text-align: center; padding: 14px 18px; font-family: monospace; font-size: 11px; color: #a5b4fc;">
+            ${c.hwFingerprint || '70e3d6dd...'}
+          </td>
+          <td style="text-align: right; padding: 14px 18px;">
+            <button onclick="toggleClientStatus('${c.id}')" style="padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; background: ${c.status === 'ACTIVE' ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.2)'}; color: ${c.status === 'ACTIVE' ? 'var(--danger, #ef4444)' : 'var(--success, #10b981)'}; border: 1px solid ${c.status === 'ACTIVE' ? 'rgba(239,68,68,0.4)' : 'rgba(16,185,129,0.4)'};">
+              ${c.status === 'ACTIVE' ? '🚫 Suspend App' : '✅ Activate App'}
+            </button>
+          </td>
+        </tr>
+      `).join('');
+
+      document.getElementById('dashTable').innerHTML = rows || `<tr><td colSpan="5" style="text-align: center; padding: 24px; color: var(--text-muted);">Listening for live client heartbeats...</td></tr>`;
+      document.getElementById('clientsTable').innerHTML = rows || `<tr><td colSpan="5" style="text-align: center; padding: 24px; color: var(--text-muted);">Listening for live client heartbeats...</td></tr>`;
+      lucide.createIcons();
+    }
+
+    async function toggleClientStatus(tenantId) {
+      await fetch('/api/clients/toggle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tenantId })
+      });
+      fetchClientsData();
+    }
+
+    function handleLicenseSubmit(e) {
+      e.preventDefault();
+      const org = document.getElementById('licTenantId').value;
+      const hw = document.getElementById('licHwId').value;
+      const token = `wh_lic_v1_${btoa(JSON.stringify({ tenantId: org, hwFingerprint: hw, expiresAt: Date.now() + 365 * 86400000 }))}`;
+      document.getElementById('licOutput').style.display = 'block';
+      document.getElementById('licToken').innerText = token;
+    }
+
+    function handleSearch(query) {
+      const q = query.toLowerCase();
+      const filtered = globalClients.filter(c => 
+        c.name.toLowerCase().includes(q) || 
+        c.id.toLowerCase().includes(q) || 
+        (c.hwFingerprint && c.hwFingerprint.toLowerCase().includes(q))
+      );
+      renderClients(filtered);
+    }
+
+    fetchClientsData();
+    setInterval(fetchClientsData, 3000);
+    lucide.createIcons();
+  </script>
+</body>
+</html>
