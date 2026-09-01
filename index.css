@@ -63,29 +63,29 @@
 }
 
 body.dark {
-  --card-bg: #101014;
-  --bg-main: #08080c;       /* Antigravity deep obsidian black/blue */
-  --bg-card: #101014;       /* Main panel container background */
-  --bg-page: #08080c;
-  --text-main: #e4e4e7;     /* zinc-200 regular text */
-  --text-muted: #a1a1aa;     /* zinc-400 muted text */
-  --border: #1f1f27;        /* Obsidian card borders */
-  --border-light: #16161c;
-  --input-border: #23232c;
-  --border-focus: #3b82f6;  /* Antigravity electric blue focus */
+  --card-bg: #18181b;
+  --bg-main: #09090b;       /* Deep obsidian black background */
+  --bg-card: #18181b;       /* Zinc-900 surface background */
+  --bg-page: #09090b;
+  --text-main: #f4f4f5;     /* Zinc-100 regular text */
+  --text-muted: #a1a1aa;     /* Zinc-400 muted text */
+  --border: #27272a;        /* Zinc-800 borders */
+  --border-light: #18181b;
+  --input-border: #3f3f46;   /* Zinc-700 input borders */
+  --border-focus: #3b82f6;  /* Electric blue focus */
   --text-dark: #ffffff;     /* Pure white for headings */
-  --nav-active-bg: rgba(59, 130, 246, 0.08);
-  --nav-active-text: #3b82f6;
-  --toast-bg: #101014;
+  --nav-active-bg: rgba(59, 130, 246, 0.12);
+  --nav-active-text: #60a5fa;
+  --toast-bg: #27272a;
   --toast-text: #ffffff;
-  --bg-card-hover: #16161c;
-  --highlight-bg: #2e1d05;
-  --highlight-border: #d97706;
-  --alert-warning-bg: #2e1d05;
-  --alert-warning-text: #fbe5aa;
+  --bg-card-hover: #27272a;
+  --highlight-bg: #422006;
+  --highlight-border: #92400e;
+  --alert-warning-bg: #422006;
+  --alert-warning-text: #fcd34d;
 
-  --bg-surface: #14141a;
-  --bg-secondary: #181822;
+  --bg-surface: #18181b;
+  --bg-secondary: #27272a;
   --danger-light: rgba(239, 68, 68, 0.15);
 
   --type-d2-color: #60a5fa;

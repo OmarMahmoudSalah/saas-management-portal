@@ -52,9 +52,9 @@
   <div class="saas-root pageLayout dark">
     
     <!-- ─── REPLICA SIDEBAR (Matching Sidebar.jsx) ─── -->
-    <aside class="sidebar no-print" aria-label="Main Sidebar Navigation" style="width: 240px; background: #090d16; border-right: 1px solid var(--border, #1f1f27); display: flex; flex-direction: column; user-select: none;">
-      <div class="brand" style="padding: 18px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border, #1f1f27);">
-        <div class="brandIcon" style="width: 38px; height: 38px; background: var(--primary, #3b82f6); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 800; font-size: 18px;">
+    <aside class="sidebar no-print" aria-label="Main Sidebar Navigation" style="width: 240px; background: var(--bg-main, #09090b); border-right: 1px solid var(--border, #27272a); display: flex; flex-direction: column; user-select: none;">
+      <div class="brand" style="padding: 18px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border, #27272a);">
+        <div class="brandIcon" style="width: 38px; height: 38px; background: linear-gradient(135deg, #3b82f6, #6366f1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 800; font-size: 18px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
           <i data-lucide="truck" size="20"></i>
         </div>
         <div>
@@ -64,39 +64,39 @@
       </div>
 
       <nav class="navVertical" style="flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;">
-        <button class="navLink active" id="nav-dashboard" onclick="switchView('dashboard', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: var(--primary, #3b82f6); color: #ffffff; font-weight: 700; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+        <button class="navLink active" id="nav-dashboard" onclick="switchView('dashboard', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.25); background: rgba(59, 130, 246, 0.12); color: #60a5fa; font-weight: 700; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
           <i data-lucide="pie-chart" size="18"></i>
           <span>Dashboard & MRR</span>
         </button>
 
-        <button class="navLink" id="nav-clients" onclick="switchView('clients', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+        <button class="navLink" id="nav-clients" onclick="switchView('clients', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
           <i data-lucide="building-2" size="18"></i>
           <span>Client Instances</span>
         </button>
 
-        <button class="navLink" id="nav-license" onclick="switchView('license', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+        <button class="navLink" id="nav-license" onclick="switchView('license', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
           <i data-lucide="key" size="18"></i>
           <span>Hardware License</span>
         </button>
 
-        <button class="navLink" id="nav-features" onclick="switchView('features', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+        <button class="navLink" id="nav-features" onclick="switchView('features', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
           <i data-lucide="sparkles" size="18"></i>
           <span>Feature Flags</span>
         </button>
 
-        <button class="navLink" id="nav-logs" onclick="switchView('logs', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+        <button class="navLink" id="nav-logs" onclick="switchView('logs', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
           <i data-lucide="activity" size="18"></i>
           <span>Telemetry Stream</span>
         </button>
 
-        <button class="navLink" id="nav-settings" onclick="switchView('settings', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
+        <button class="navLink" id="nav-settings" onclick="switchView('settings', this)" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text-muted, #a1a1aa); font-weight: 600; font-size: 13px; cursor: pointer; text-align: left; width: 100%;">
           <i data-lucide="settings" size="18"></i>
           <span>Settings</span>
         </button>
       </nav>
 
       <!-- Sidebar User Footprint -->
-      <div style="padding: 16px; border-top: 1px solid var(--border, #1f1f27); display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2);">
+      <div style="padding: 16px; border-top: 1px solid var(--border, #27272a); display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2);">
         <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); color: var(--primary, #3b82f6); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; border: 1px solid var(--primary, #3b82f6);">
           SA
         </div>
@@ -111,8 +111,8 @@
     <div class="main-body">
       
       <!-- REPLICA HEADER BAR (Matching Header.jsx) -->
-      <header class="header no-print" style="height: 64px; background: var(--bg-card, #101014); border-bottom: 1px solid var(--border, #1f1f27); display: flex; align-items: center; justify-content: space-between; padding: 0 28px;">
-        <div class="headerSearchContainer" style="display: flex; align-items: center; gap: 10px; background: var(--bg-main, #08080c); border: 1px solid var(--input-border, #23232c); border-radius: 8px; padding: 8px 14px; width: 320px;">
+      <header class="header no-print" style="height: 64px; background: var(--bg-card, #18181b); border-bottom: 1px solid var(--border, #27272a); display: flex; align-items: center; justify-content: space-between; padding: 0 28px;">
+        <div class="headerSearchContainer" style="display: flex; align-items: center; gap: 10px; background: var(--bg-main, #09090b); border: 1px solid var(--input-border, #3f3f46); border-radius: 8px; padding: 8px 14px; width: 320px;">
           <i data-lucide="search" size="16" color="var(--text-muted, #a1a1aa)"></i>
           <input 
             type="text" 
@@ -129,7 +129,7 @@
             Central Telemetry Online
           </div>
 
-          <button onclick="fetchClientsData()" style="padding: 8px 14px; background: var(--bg-main, #08080c); border: 1px solid var(--border, #1f1f27); color: #ffffff; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+          <button onclick="fetchClientsData()" style="padding: 8px 14px; background: var(--bg-main, #09090b); border: 1px solid var(--border, #27272a); color: #ffffff; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;">
             <i data-lucide="refresh-cw" size="14"></i>
             <span>Refresh</span>
           </button>
@@ -318,13 +318,15 @@
       document.querySelectorAll('.navLink').forEach(b => {
         b.style.background = 'transparent';
         b.style.color = 'var(--text-muted, #a1a1aa)';
+        b.style.borderColor = 'transparent';
         b.style.fontWeight = '600';
       });
 
       document.getElementById(`pane-${viewId}`).classList.add('active');
       if (btn) {
-        btn.style.background = 'var(--primary, #3b82f6)';
-        btn.style.color = '#ffffff';
+        btn.style.background = 'rgba(59, 130, 246, 0.12)';
+        btn.style.color = '#60a5fa';
+        btn.style.borderColor = 'rgba(59, 130, 246, 0.25)';
         btn.style.fontWeight = '700';
       }
     }
